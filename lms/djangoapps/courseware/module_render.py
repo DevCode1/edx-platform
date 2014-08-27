@@ -14,6 +14,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.cache import cache
 from django.core.urlresolvers import reverse
+from django.db import IntegrityError
 from django.http import Http404, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
@@ -544,6 +545,7 @@ def get_module_system_for_user(user, field_data_cache,
         descriptor_runtime=descriptor.runtime,
         rebind_noauth_module_to_user=rebind_noauth_module_to_user,
         user_location=user_location,
+        exceptions_to_raise=(IntegrityError,)
     )
 
     # pass position specified in URL to module through ModuleSystem
