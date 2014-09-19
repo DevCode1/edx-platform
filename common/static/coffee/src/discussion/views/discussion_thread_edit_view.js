@@ -16,6 +16,7 @@
                 this.container = options.container || $('.thread-content-wrapper');
                 this.mode = options.mode || 'inline';
                 this.course_settings = options.course_settings;
+                this.threadType = options.threadType;
                 this.topicId = options.topicId;
                 _.bindAll(this);
                 return this;
@@ -26,6 +27,8 @@
                 this.$el.html(this.template(this.model.toJSON())).appendTo(this.container);
                 this.submitBtn = this.$('.post-update');
                 if (this.isTabMode()) {
+                    this.threadTypeView = new DiscussionThreadTypeView({threadType: this.threadType});
+                    this.addField(this.threadTypeView.render());
                     this.topicView = new DiscussionTopicMenuView({
                         topicId: this.topicId,
                         course_settings: this.course_settings
@@ -47,6 +50,7 @@
 
             save: function() {
                 var title = this.$('.edit-post-title').val(),
+                    threadType = this.threadTypeView.val(),
                     body = this.$('.edit-post-body textarea').val(),
                     commentableId = this.isTabMode() ? this.topicView.getCurrentTopicId() : null;
 
@@ -59,6 +63,7 @@
                     async: false, // @TODO when the rest of the stuff below is made to work properly..
                     data: {
                         title: title,
+                        thread_type: threadType,
                         body: body,
                         commentable_id: commentableId
                     },
@@ -74,6 +79,7 @@
                         this.$('.wmd-preview p').html('');
                         if (this.isTabMode()) {
                             _.extend(newAttrs, {
+                                thread_type: threadType,
                                 commentable_id: commentableId,
                                 courseware_title: this.topicView.getFullTopicName()
                             });

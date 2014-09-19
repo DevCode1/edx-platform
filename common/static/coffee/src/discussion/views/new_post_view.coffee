@@ -7,6 +7,7 @@ if Backbone?
               throw new Error("invalid mode: " + @mode)
           @course_settings = options.course_settings
           @topicId = options.topicId
+          @threadType = options.threadType
 
       render: () ->
           context = _.clone(@course_settings.attributes)
@@ -17,6 +18,10 @@ if Backbone?
           })
           @$el.html(_.template($("#new-post-template").html(), context))
           if @isTabMode()
+              @threadTypeView = new DiscussionThreadTypeView {
+                  threadType: @threadType
+              }
+              @addField(@threadTypeView.render())
               @topicView = new DiscussionTopicMenuView {
                   topicId:  @topicId
                   course_settings: @course_settings
@@ -61,7 +66,7 @@ if Backbone?
 
       createPost: (event) ->
           event.preventDefault()
-          thread_type = @$(".post-type-input:checked").val()
+          threadType = @threadTypeView.val()
           title   = @$(".js-post-title").val()
           body    = @$(".js-post-body").find(".wmd-input").val()
           group   = @$(".js-group-select option:selected").attr("value")
@@ -81,7 +86,7 @@ if Backbone?
               dataType: 'json'
               async: false # TODO when the rest of the stuff below is made to work properly..
               data:
-                  thread_type: thread_type
+                  thread_type: threadType
                   title: title
                   body: body
                   anonymous: anonymous
