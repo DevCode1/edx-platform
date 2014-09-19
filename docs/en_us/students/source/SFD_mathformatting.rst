@@ -42,6 +42,8 @@ For more information about the types of characters you can use, see below.
 Numbers
 ============
 
+You can use the following types of numbers:
+
 - Integers: 2520
 - Fractions: 2/3
 - Normal floats: 3.14
@@ -54,45 +56,47 @@ possible in the Python programming language.
 Scientific Notation and Affixes
 ====================================
 
-To indicate scientific notation, enter the letter e and the exponent that you want. You can enter positive exponents as well as negative exponents. If you enter a negative exponent, make sure to include a minus sign.
+To indicate scientific notation, enter the letter ``e`` and the exponent that you want. You can enter positive exponents as well as negative exponents. If you enter a negative exponent, make sure to include a minus sign.
 
 For example, type ``0.012`` as ``1.2e-2`` and ``-440,000`` as ``-4.4e+5`` or ``-4.4e5``.
 
 You can also use the following International System of Units (SI) affixes: 
 
-* - Affix
-  - Stands for
-  - Example
-* - %
-  - percent
-  - 0.01 = 1e-2
-* - k
-  - kilo
-  - 1000 = 1e3
-* - M
-  - mega
-  - 1e6
-* - G
-  - giga
-  - 1e9
-* - T
-  - tera
-  - 1e12
-* - c
-  - centi
-  - 0.01 = 1e-2
-* - m
-  - milli
-  - 0.001 = 1e-3
-* - u
-  - micro
-  - 1e-6
-* - n
-  - nano
-  - 1e-9
-* - p
-  - pico
-  - 1e-12
+.. list-table::
+
+  * - Affix
+    - Stands for
+    - Example
+  * - %
+    - percent
+    - 0.01 = 1e-2
+  * - k
+    - kilo
+    - 1000 = 1e3
+  * - M
+    - mega
+    - 1e6
+  * - G
+    - giga
+    - 1e9
+  * - T
+    - tera
+    - 1e12
+  * - c
+    - centi
+    - 0.01 = 1e-2
+  * - m
+    - milli
+    - 0.001 = 1e-3
+  * - u
+    - micro
+    - 1e-6
+  * - n
+    - nano
+    - 1e-9
+  * - p
+    - pico
+    - 1e-12
 
 ============
 Constants
@@ -112,6 +116,8 @@ You can use the following constants:
 ==================
 Greek Letters
 ==================
+
+To use any of the following Greek letters, type the name of the letter in the response field.
 
 .. list-table::
    :widths: 20 20 20 20
@@ -153,13 +159,13 @@ Greek Letters
 Functions
 ============
 
-To use a function, type the letters that represent the function, and then surround the expression in that function with parentheses. For example, instead of ``sqrt4a+b``, type ``sqrt(4*a+b)``. 
+To use a function, type the letters that represent the function, and then surround the expression in that function with parentheses. For example, to represent the square root of ``4a+b``, type ``sqrt(4*a+b)``. 
 
-The system can understand the following functions:
+You can use the following functions:
 
 * Common functions: sqrt, log10, log2, ln, exp, abs
 * Trigonometric functions: sin, cos, tan, sec, csc, cot
 * Their inverses: arcsin, arccos, arctan, arcsec, arccsc, arccot
 * Hyperbolic trigonometric functions and their inverses: sinh, cosh, tanh, sech, csch, coth, arcsinh, arccosh, arctanh, arcsech, arccsch, arccoth
-* Factorials: Enter factorials as ``fact(3)`` or ``factorial(3)``. You must use integers. For example, you can't enter ``3!`` or ``fact(1.5)``.
+* Factorials: Enter factorials as ``fact(3)`` or ``factorial(3)``. You must use integers. For example, you can't enter ``fact(1.5)``.
 * A "parallel resistors" operator (``||``). For example, ``1 || 2`` represents the resistance of a pair of parallel resistors (of resistance 1 and 2 ohms), evaluating to 2/3 (ohms).

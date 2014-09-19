@@ -11,7 +11,6 @@ Information for Students
    :numbered:
    :maxdepth: 2
 
-   login_guide
-   certificates
-   math_students
-   ora_students
+   SFD_certificates
+   SFD_mathformatting
+   SFD_ORA
