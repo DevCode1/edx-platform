@@ -19,6 +19,8 @@ sections:
 
 * :ref:`Organizing_discussions`
 
+* :ref:`Assigning_discussion_roles`
+
 * :ref:`Running_discussions`
 
 * :ref:`Moderating_discussions`
@@ -80,7 +82,8 @@ Add Units With a Discussion Component
 
 Typically, all units are added during the design and creation of your course in
 Studio. To add a discussion topic to a unit, you add a discussion component.
-Follow the instructions in :ref:`Working with Discussion Components`.
+Follow the instructions in :ref:`Working with Discussion Components`. The
+result is a content-specific discussion topic.
 
 This type of discussion topic is subject to the release date of the section
 that contains it. Students cannot contribute to these discussion topics until
@@ -137,9 +140,9 @@ Discussion list now includes this topic.
 
 .. _Assigning_discussion_roles:
 
-==========================================
+*************************************************
 Assign Discussion Administration Roles 
-==========================================
+*************************************************
 
 You can designate a team of people to help you run course discussions.
 
@@ -171,7 +174,7 @@ these roles:
   by community TAs have a colored "Community TA" identifier. This role is often
   given to students.
 
-.. put this comment in to make the formatting of this bulleted list consistent when output using the spinx template
+.. I put this comment in to make the formatting of this bulleted list consistent when output using the spinx template
 
 * *Discussion admins* have the same options for working with discussions as
   moderators, and their posts, responses, and comments have the same "Staff"
@@ -190,8 +193,13 @@ addresses or usernames.
 * To get this information for an enrolled student, on the Instructor Dashboard
   click **Data Download**, then **Download profile information as a CSV**.
 
-To assign a role, you must be the course author or an Instructor (that is, you
-are identified in Studio as a team member with Admin access).
+====================================
+Assign Roles
+====================================
+
+To assign a discussion administration role, you must be the course author or an
+Instructor (that is, you are identified in Studio as a team member with Admin
+access).
 
 #. View the live version of the course.
 
