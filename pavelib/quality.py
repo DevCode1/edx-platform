@@ -43,7 +43,7 @@ def run_pylint(options):
     """
 
     num_violations = 0
-    violations_limit = getattr(options, 'limit', 0)
+    violations_limit = int(getattr(options, 'limit', 0))
     errors = getattr(options, 'errors', False)
     systems = getattr(options, 'system', 'lms,cms,common').split(',')
 
@@ -98,7 +98,7 @@ def run_pep8(options):
     Run pep8 on system code
     """
     systems = getattr(options, 'system', 'lms,cms,common').split(',')
-    violations_limit = getattr(options, 'limit', 0)
+    violations_limit = int(getattr(options, 'limit', 0))
     num_violations = 0
 
     for system in systems:
