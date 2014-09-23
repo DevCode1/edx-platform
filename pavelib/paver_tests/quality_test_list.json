@@ -1,0 +1,7 @@
+[
+    "lms/djangoapps/course_wiki/plugins/markdownedx/mdx_video.py:192: [C0111(missing-docstring), Bliptv] Missing docstring",
+    "cms/envs/test.py:74: [C0322(no-space-before-operator)] Operator not preceded by a space",
+    "cms/djangoapps/course_creators/models.py:16: [C0103(invalid-name)] Invalid name \"send_admin_notification\" for type constant (should match (([A-Z_][A-Z0-9_]*)|(__.*__)|log|urlpatterns)$)",
+    "cms/envs/test.py:72: [C0322(no-space-before-operator)] Operator not preceded by a space\nSTATICFILES_STORAGE='pipeline.storage.NonPackagingPipelineStorage'\n                   ^"
+
+]
