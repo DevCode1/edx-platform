@@ -6,11 +6,14 @@ if Backbone?
 
     renderTemplate: ->
         @template = _.template($("#thread-response-show-template").html())
+        thread = @model.get("thread")
+        threadType = thread.get("thread_type") if thread?
         context = _.extend(
             {
                 cid: @model.cid,
                 author_display: @getAuthorDisplay(),
-                endorser_display: @getEndorserDisplay()
+                endorser_display: @getEndorserDisplay(),
+                thread_type: threadType
             },
             @model.attributes
         )
