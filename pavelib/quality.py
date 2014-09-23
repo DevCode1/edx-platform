@@ -16,11 +16,11 @@ def _count_pep8_violations(report_file):
 
 def _count_pylint_violations(report_file):
     num_violations_report = 0
-    pylint_pattern = ".(\d+):\ \[(\D)(\d+.+\])."
+    pylint_pattern = ".(\d+):\ \[(\D\d+.+\])."
 
     for line in open(report_file):
         violation_list_for_line = re.split(pylint_pattern, line)
-        if len(violation_list_for_line) == 5:
+        if len(violation_list_for_line) == 4:
             num_violations_report += 1
     return num_violations_report
 
