@@ -15,7 +15,13 @@ def _count_pep8_violations(report_file):
     return num_lines
 
 def _count_pylint_violations(report_file):
+    """
+    Parses a pylint report line-by-line and determines the number of violations reported
+    """
     num_violations_report = 0
+    # An example string:
+    # common/lib/xmodule/xmodule/tests/test_conditional.py:21: [C0111(missing-docstring), DummySystem] Missing docstring
+    # More examples can be found in the unit tests for this method
     pylint_pattern = ".(\d+):\ \[(\D\d+.+\])."
 
     for line in open(report_file):
