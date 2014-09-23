@@ -270,3 +270,5 @@ specific interchanges:
  .. image:: ../Images/Configure_cohort_topic.png
   :alt: Cohort Configuration dictionary field with the cohorted_discussions key
         defined as true
+
+For more information, see :ref:`Apply Naming Conventions to CourseWide Topics`.
