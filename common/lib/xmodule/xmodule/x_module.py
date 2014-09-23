@@ -317,7 +317,7 @@ class XModuleMixin(XBlockMixin):
                     child = self.runtime.get_block(child_loc)
                     child.runtime.export_fs = self.runtime.export_fs
                 except ItemNotFoundError:
-                    log.exception(u'Unable to load item {loc}, skipping'.format(loc=child_loc))
+                    log.warning(u'Unable to load item {loc}, skipping'.format(loc=child_loc))
                     continue
                 self._child_instances.append(child)
 
