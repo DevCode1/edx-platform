@@ -90,7 +90,7 @@ Insights, which staff use to review and download data about their courses and
 students.
 
 .. list-table::
-   :widths: 20 10 10 10 10 10 10
+   :widths: 20 10 10 10 10 10
    :header-rows: 1
 
    * -
@@ -99,18 +99,15 @@ students.
      - Firefox
      - IE 9
      - IE 10
-     - IE 11
-   * - Windows
-     - Windows 7
+   * - Windows 7
+     - Yes
      - N/A
-     - Windows 7
+     - Yes
      - Provisional
      - Provisional
-     - Windows 8
    * - Mac OSX 10.8 or 10.9
      - Yes
      - Yes
      - Yes
-     - N/A
      - N/A
      - N/A
