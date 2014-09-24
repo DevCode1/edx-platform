@@ -86,7 +86,8 @@ edX Insights
 ***********************************
 
 The following table shows operating system and browser support for edX
-Insights, which staff use to review and download data about their courses.
+Insights, which staff use to review and download data about their courses and
+students.
 
 .. list-table::
    :widths: 20 10 10 10 10 10 10
