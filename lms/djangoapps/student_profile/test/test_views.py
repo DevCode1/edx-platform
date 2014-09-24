@@ -8,13 +8,13 @@ from django.test import TestCase
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
+from util.testing import UrlResetMixin
 from user_api.api import account as account_api
 from user_api.api import profile as profile_api
 
 
-@patch.dict(settings.FEATURES, {'ENABLE_NEW_DASHBOARD': True})
 @ddt.ddt
-class StudentProfileViewTest(TestCase):
+class StudentProfileViewTest(UrlResetMixin, TestCase):
     """ Tests for the student profile views. """
 
     USERNAME = u"heisenberg"
@@ -22,7 +22,10 @@ class StudentProfileViewTest(TestCase):
     EMAIL = u"walt@savewalterwhite.com"
     FULL_NAME = u"𝖂𝖆𝖑𝖙𝖊𝖗 𝖂𝖍𝖎𝖙𝖊"
 
+    @patch.dict(settings.FEATURES, {'ENABLE_NEW_DASHBOARD': True})
     def setUp(self):
+        super(StudentProfileViewTest, self).setUp()
+
         # Create/activate a new account
         activation_key = account_api.create_account(self.USERNAME, self.PASSWORD, self.EMAIL)
         account_api.activate_account(activation_key)
@@ -40,19 +43,17 @@ class StudentProfileViewTest(TestCase):
         profile_info = profile_api.profile_info(self.USERNAME)
         self.assertEquals(profile_info['full_name'], '')
 
-        response = self.client.put(
-            path=reverse('name_change'),
-            data=urlencode({
-                # We can't pass a Unicode object to urlencode, so we encode the Unicode object
-                'new_name': self.FULL_NAME.encode('utf8')
-            }),
-            content_type= 'application/x-www-form-urlencoded'
-        )
+        response = self._change_name(self.FULL_NAME)
         self.assertEquals(response.status_code, 204)
 
         # Verify that the name on the account has been changed
         profile_info = profile_api.profile_info(self.USERNAME)
         self.assertEquals(profile_info['full_name'], self.FULL_NAME)
+
+    def test_name_change_invalid(self):
+        # Name cannot be an empty string
+        response = self._change_name('')
+        self.assertEquals(response.status_code, 400)
 
     @ddt.data(
         ('get', 'profile_index'),
@@ -81,3 +82,19 @@ class StudentProfileViewTest(TestCase):
         for method in wrong_methods:
             response = getattr(self.client, method)(url)
             self.assertEqual(response.status_code, 405)
+
+    def _change_name(self, new_name):
+        """Request a name change.
+
+        Returns:
+            HttpResponse
+
+        """
+        return self.client.put(
+            path=reverse('name_change'),
+            data=urlencode({
+                # We can't pass a Unicode object to urlencode, so we encode the Unicode object
+                'new_name': new_name.encode('utf-8')
+            }),
+            content_type= 'application/x-www-form-urlencoded'
+        )
