@@ -315,3 +315,47 @@ class ForumTestCase(CourseTestCase):
         ]
         self.course.discussion_blackouts = [(t.isoformat(), t2.isoformat()) for t, t2 in times2]
         self.assertFalse(self.course.forum_posts_allowed)
+
+
+class CourseKeyVerificationTestCase(CourseTestCase):
+    def setUp(self):
+        """
+        Create test course.
+        """
+        super(CourseKeyVerificationTestCase, self).setUp()
+        self.course = CourseFactory.create(org='edX', number='test_course_key', display_name='Test Course')
+
+    def test_course_key_decorator(self):
+        """
+        Tests for the ensure_valid_course_key decorator.
+        """
+        course_id = self.course.id
+        valid_course_key_string = '{0}/{1}/{2}'.format(course_id.org, course_id.course, course_id.run)
+        invalid_course_key_string = 'slashes:{0}+{1}+{2}'.format(course_id.org, course_id.course, course_id.run)
+
+        valid_url = '/import/{course_key}'.format(course_key=valid_course_key_string)
+        resp = self.client.get_html(valid_url)
+        self.assertEqual(resp.status_code, 200)
+        invalid_url = '/import/{course_key}'.format(course_key=invalid_course_key_string)
+        resp = self.client.get_html(invalid_url)
+        self.assertEqual(resp.status_code, 404)
+
+        valid_url = '/export/{course_key}'.format(course_key=valid_course_key_string)
+        resp = self.client.get_html(valid_url)
+        self.assertEqual(resp.status_code, 200)
+        invalid_url = '/export/{course_key}'.format(course_key=invalid_course_key_string)
+        resp = self.client.get_html(invalid_url)
+        self.assertEqual(resp.status_code, 404)
+
+        valid_url = '/import_status/{course_key}/{filename}'.format(
+            course_key=valid_course_key_string,
+            filename='xyz.tar.gz'
+        )
+        resp = self.client.get_html(valid_url)
+        self.assertEqual(resp.status_code, 200)
+        invalid_url = '/import_status/{course_key}/{filename}'.format(
+            course_key=invalid_course_key_string,
+            filename='xyz.tar.gz'
+        )
+        resp = self.client.get_html(invalid_url)
+        self.assertEqual(resp.status_code, 404)
