@@ -41,6 +41,7 @@ from open_ended_grading import open_ended_notifications
 from student.models import UserTestGroup, CourseEnrollment
 from student.views import single_course_reverification_info
 from util.cache import cache, cache_if_anonymous
+from util.db import commit_on_success_with_read_committed
 from xblock.fragment import Fragment
 from xmodule.modulestore.django import modulestore
 from xmodule.modulestore.exceptions import ItemNotFoundError, NoPathToItem
@@ -266,6 +267,7 @@ def chat_settings(course, user):
 @ensure_csrf_cookie
 @cache_control(no_cache=True, no_store=True, must_revalidate=True)
 @verify_course_id
+@commit_on_success_with_read_committed
 def index(request, course_id, chapter=None, section=None,
           position=None):
     """
