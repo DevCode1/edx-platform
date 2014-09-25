@@ -23,7 +23,7 @@ def run_pylint(options):
     fail the task if too many violations are found.
     """
     num_violations = 0
-    violations_limit = int(getattr(options, 'limit', 0))
+    violations_limit = int(getattr(options, 'limit', -1))
     errors = getattr(options, 'errors', False)
     systems = getattr(options, 'system', 'lms,cms,common').split(',')
 
@@ -63,7 +63,7 @@ def run_pylint(options):
             "{report_dir}/pylint.report".format(report_dir=report_dir))
 
     print("Number of pylint violations: " + str(num_violations))
-    if (num_violations > violations_limit) and (violations_limit > 0):
+    if num_violations > violations_limit > -1:
         raise Exception("Failed. Too many pylint violations. "
                         "The limit is {violations_limit}.".format(violations_limit=violations_limit))
 
@@ -79,6 +79,8 @@ def _count_pylint_violations(report_file):
 
     for line in open(report_file):
         violation_list_for_line = pylint_pattern.split(line)
+        # If the string is parsed into four parts, then we've found a violation. Example of split parts:
+        # test file, line number, violation name, violation details
         if len(violation_list_for_line) == 4:
             num_violations_report += 1
     return num_violations_report
@@ -96,7 +98,7 @@ def run_pep8(options):
     """
     num_violations = 0
     systems = getattr(options, 'system', 'lms,cms,common').split(',')
-    violations_limit = int(getattr(options, 'limit', 0))
+    violations_limit = int(getattr(options, 'limit', -1))
 
     for system in systems:
         # Directory to put the pep8 report in.
@@ -109,7 +111,7 @@ def run_pep8(options):
 
     print("Number of pep8 violations: " + str(num_violations))
     # Fail the task if the violations limit has been reached
-    if (num_violations > violations_limit) and (violations_limit > 0):
+    if num_violations > violations_limit > -1:
         raise Exception("Failed. Too many pep8 violations. "
                         "The limit is {violations_limit}.".format(violations_limit=violations_limit))
 
