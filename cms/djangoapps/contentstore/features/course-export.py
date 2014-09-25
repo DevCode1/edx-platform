@@ -51,7 +51,7 @@ def get_an_error_dialog(step):
 def i_click_on_error_dialog(step):
     world.click_link_by_text('Correct failed component')
 
-    problem_string = unicode(world.scenario_dict['COURSE'].id.make_usage_key("vertical", 'ignore'))
+    problem_string = unicode(world.scenario_dict['COURSE'].id.make_usage_key("problem", 'ignore'))
     problem_string = u"Problem {}".format(problem_string[:problem_string.rfind('ignore')])
     assert_true(
         world.css_html("span.inline-error").startswith(problem_string),
