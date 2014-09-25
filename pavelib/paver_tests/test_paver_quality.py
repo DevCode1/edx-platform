@@ -1,16 +1,12 @@
-import os
-import mock
-from mock import patch, MagicMock
 import unittest
 import pavelib.quality
-import StringIO
 import tempfile
 import os
 from ddt import ddt, file_data
 
 
 @ddt
-class TestPaverQuality(unittest.TestCase):
+class TestPaverQualityViolations(unittest.TestCase):
 
     def setUp(self):
         self.f = tempfile.NamedTemporaryFile(delete=False)
@@ -22,7 +18,14 @@ class TestPaverQuality(unittest.TestCase):
         num = pavelib.quality._count_pylint_violations(f.name)
         self.assertEqual(num, 0)
 
-    @file_data('quality_test_list.json')
+    def test_pylint_parser_pep8(self):
+        # Pep8 violations should be ignored.
+        with open(self.f.name, 'w') as f:
+            f.write("foo/hello/test.py:304:15: E203 whitespace before ':'")
+        num = pavelib.quality._count_pylint_violations(f.name)
+        self.assertEqual(num, 0)
+
+    @file_data('pylint_test_list.json')
     def test_pylint_parser_count_violations(self, value):
     # Tests:
     #     * Different types of violations
@@ -32,6 +35,11 @@ class TestPaverQuality(unittest.TestCase):
         num = pavelib.quality._count_pylint_violations(f.name)
         self.assertEqual(num, 1)
 
+    def test_pep8_parser(self):
+        with open(self.f.name, 'w') as f:
+            f.write("hello\nhithere")
+        num = pavelib.quality._count_pep8_violations(f.name)
+        self.assertEqual(num, 2)
 
     def tearDown(self):
         os.remove(self.f.name)

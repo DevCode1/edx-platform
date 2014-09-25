@@ -10,26 +10,6 @@ from optparse import make_option
 from .utils.envs import Env
 
 
-def _count_pep8_violations(report_file):
-    num_lines = sum(1 for line in open(report_file))
-    return num_lines
-
-def _count_pylint_violations(report_file):
-    """
-    Parses a pylint report line-by-line and determines the number of violations reported
-    """
-    num_violations_report = 0
-    # An example string:
-    # common/lib/xmodule/xmodule/tests/test_conditional.py:21: [C0111(missing-docstring), DummySystem] Missing docstring
-    # More examples can be found in the unit tests for this method
-    pylint_pattern = ".(\d+):\ \[(\D\d+.+\])."
-
-    for line in open(report_file):
-        violation_list_for_line = re.split(pylint_pattern, line)
-        if len(violation_list_for_line) == 4:
-            num_violations_report += 1
-    return num_violations_report
-
 @task
 @needs('pavelib.prereqs.install_python_prereqs')
 @cmdopts([
@@ -39,9 +19,9 @@ def _count_pylint_violations(report_file):
 ])
 def run_pylint(options):
     """
-    Run pylint on system code
+    Run pylint on system code. When violations limit is passed in,
+    fail the task if too many violations are found.
     """
-
     num_violations = 0
     violations_limit = int(getattr(options, 'limit', 0))
     errors = getattr(options, 'errors', False)
@@ -87,6 +67,22 @@ def run_pylint(options):
         raise Exception("Failed. Too many pylint violations. "
                         "The limit is {violations_limit}.".format(violations_limit=violations_limit))
 
+def _count_pylint_violations(report_file):
+    """
+    Parses a pylint report line-by-line and determines the number of violations reported
+    """
+    num_violations_report = 0
+    # An example string:
+    # common/lib/xmodule/xmodule/tests/test_conditional.py:21: [C0111(missing-docstring), DummySystem] Missing docstring
+    # More examples can be found in the unit tests for this method
+    pylint_pattern = re.compile(".(\d+):\ \[(\D\d+.+\]).")
+
+    for line in open(report_file):
+        violation_list_for_line = pylint_pattern.split(line)
+        if len(violation_list_for_line) == 4:
+            num_violations_report += 1
+    return num_violations_report
+
 @task
 @needs('pavelib.prereqs.install_python_prereqs')
 @cmdopts([
@@ -95,11 +91,12 @@ def run_pylint(options):
 ])
 def run_pep8(options):
     """
-    Run pep8 on system code
+    Run pep8 on system code. When violations limit is passed in,
+    fail the task if too many violations are found.
     """
+    num_violations = 0
     systems = getattr(options, 'system', 'lms,cms,common').split(',')
     violations_limit = int(getattr(options, 'limit', 0))
-    num_violations = 0
 
     for system in systems:
         # Directory to put the pep8 report in.
@@ -115,6 +112,10 @@ def run_pep8(options):
     if (num_violations > violations_limit) and (violations_limit > 0):
         raise Exception("Failed. Too many pep8 violations. "
                         "The limit is {violations_limit}.".format(violations_limit=violations_limit))
+
+def _count_pep8_violations(report_file):
+    num_lines = sum(1 for line in open(report_file))
+    return num_lines
 
 @task
 @needs('pavelib.prereqs.install_python_prereqs')
