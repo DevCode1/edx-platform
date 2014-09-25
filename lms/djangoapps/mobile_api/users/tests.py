@@ -1,0 +1,69 @@
+"""
+Tests for users API
+"""
+from rest_framework.test import APITestCase
+from xmodule.modulestore.tests.factories import CourseFactory
+from courseware.tests.factories import StaffFactory, UserFactory
+from courseware.tests.helpers import LoginEnrollmentTestCase
+from student.tests.factories import CourseEnrollmentAllowedFactory
+from django.core.urlresolvers import reverse
+
+
+class TestUserApi(APITestCase):
+    """
+    Test the user info API
+    """
+    def setUp(self):
+        self.course = CourseFactory.create(mobile_available=True)
+        self.user = UserFactory.create()
+        self.password = 'test'
+        self.username = self.user.username
+
+    def tearDown(self):
+        self.client.logout()
+
+    def test_user_enrollments(self):
+        self.client.login(username=self.username, password=self.password)
+        url = reverse('courseenrollment-detail', kwargs={'username': self.user.username})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [])
+
+        resp = self.client.post(reverse('change_enrollment'), {
+            'enrollment_action': 'enroll',
+            'course_id': self.course.id.to_deprecated_string(),
+            'check_access': True,
+        })
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+        courses = response.data
+
+        self.assertTrue(len(courses), 1)
+        course = courses[0]['course']
+        self.assertTrue('video_outline' in course)
+        self.assertTrue('course_handouts' in course)
+        self.assertEqual(course['id'], self.course.id.to_deprecated_string())
+        self.assertEqual(courses[0]['mode'], 'honor')
+
+    def test_user_overview(self):
+        self.client.login(username=self.username, password=self.password)
+        url = reverse('user-detail', kwargs={'username': self.user.username})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        data = response.data
+        self.assertEqual(data['username'], self.user.username)
+        self.assertEqual(data['email'], self.user.email)
+
+    def test_overview_anon(self):
+        url = reverse('user-detail', kwargs={'username': self.user.username})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 401)
+
+    def test_redirect_userinfo(self):
+        self.client.login(username=self.username, password=self.password)
+        url = '/api/mobile/v0.5/my_user_info'
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(self.username in response['location'])
+
