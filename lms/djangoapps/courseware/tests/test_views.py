@@ -569,7 +569,7 @@ class ProgressPageTests(ModuleStoreTestCase):
         self.assertEqual(resp.status_code, 200)
 
 
-class TestVerifyCourseIdDecorator(TestCase):
+class VerifyCourseKeyDecoratorTests(TestCase):
     """
     Tests for the ensure_valid_course_key decorator.
     """

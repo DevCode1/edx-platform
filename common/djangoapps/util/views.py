@@ -29,10 +29,7 @@ def ensure_valid_course_key(view_func):
     """
     @wraps(view_func)
     def inner(request, *args, **kwargs):
-        course_key = kwargs.get('course_key_string')
-        if course_key is None:
-            course_key = kwargs.get('course_id')
-
+        course_key = kwargs.get('course_key_string') or kwargs.get('course_id')
         if course_key is not None:
             try:
                 CourseKey.from_string(course_key)
