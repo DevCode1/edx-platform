@@ -20,7 +20,7 @@ class BlockOutline(object):
             self.local_cache['course_videos'] = get_video_info_for_course_and_profile(
                 unicode(course_id), "mobile_low"
             )
-        except ValInternalError:
+        except ValInternalError: # pragma: nocover
             self.local_cache['course_videos'] = {}
 
     def __iter__(self):
