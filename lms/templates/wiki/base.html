@@ -5,10 +5,10 @@
 
 {% block headextra %}
   {% compressed_css 'course' %}
-  
+
   <script type="text/javascript">
     function ajaxError(){}
-    
+
     $.ajaxSetup({
       timeout: 7000,
       cache: false,
@@ -35,9 +35,9 @@
       window.onload = add_schematic_handler(window.onload);
     </script>
 
-    <script src="{% static 'js/bootstrap-alert.js' %}"></script>
-    <script src="{% static 'js/bootstrap-collapse.js' %}"></script>
-    <script src="{% static 'js/bootstrap-modal.js' %}"></script>
+    <script src="{% static 'js/src/bootstrap-alert.js' %}"></script>
+    <script src="{% static 'js/src/bootstrap-collapse.js' %}"></script>
+    <script src="{% static 'js/src/bootstrap-modal.js' %}"></script>
 
     {% with mathjax_mode='wiki' %}
       {% include "mathjax_include.html" %}
@@ -58,7 +58,7 @@
   <section class="container wiki {{ selected_tab }}" id="wiki-content">
     <div class="wiki-wrapper">
       {% block wiki_body %}
-        
+
         {% block wiki_breadcrumbs %}{% endblock %}
 
         {% if messages %}

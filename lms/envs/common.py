@@ -972,7 +972,7 @@ courseware_js = (
         'coffee/src/' + pth + '.js'
         for pth in ['courseware', 'histogram', 'navigation', 'time']
     ] +
-    ['js/' + pth + '.js' for pth in ['ajax-error']] +
+    ['js/src/' + pth + '.js' for pth in ['ajax-error']] +
     sorted(rooted_glob(PROJECT_ROOT / 'static', 'coffee/src/modules/**/*.js'))
 )
 
@@ -1030,8 +1030,8 @@ instructor_dash_js = sorted(rooted_glob(PROJECT_ROOT / 'static', 'coffee/src/ins
 # JavaScript used by the student account and profile pages
 # These are not courseware, so they do not need many of the courseware-specific
 # JavaScript modules.
-student_account_js = sorted(rooted_glob(PROJECT_ROOT / 'static', 'js/student_account/**/*.js'))
-student_profile_js = sorted(rooted_glob(PROJECT_ROOT / 'static', 'js/student_profile/**/*.js'))
+student_account_js = sorted(rooted_glob(PROJECT_ROOT / 'static', 'js/src/student_account/**/*.js'))
+student_profile_js = sorted(rooted_glob(PROJECT_ROOT / 'static', 'js/src/student_profile/**/*.js'))
 
 PIPELINE_CSS = {
     'style-vendor': {
@@ -1118,12 +1118,12 @@ PIPELINE_JS = {
 
         # Application will contain all paths not in courseware_only_js
         'source_filenames': sorted(common_js) + sorted(project_js) + [
-            'js/form.ext.js',
-            'js/my_courses_dropdown.js',
-            'js/toggle_login_modal.js',
-            'js/sticky_filter.js',
-            'js/query-params.js',
-            'js/src/utility.js',
+            'js/src/form.ext.js',
+            'js/src/my_courses_dropdown.js',
+            'js/src/toggle_login_modal.js',
+            'js/src/sticky_filter.js',
+            'js/src/query-params.js',
+            'js/src/src/utility.js',
             'js/src/accessibility_tools.js',
             'js/src/ie_shim.js',
         ],
