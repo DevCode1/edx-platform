@@ -136,7 +136,7 @@ browser and pasting the output.  When that file changes, this one should be rege
                     {
                         contentId: cid,
                         contentType: 'response',
-                        primaryActions: ['vote', thread.get('thread_type') == 'question' ? 'answer' : 'endorse'],
+                        primaryActions: ['vote', thread_type == 'question' ? 'answer' : 'endorse'],
                         secondaryActions: ['edit', 'delete', 'report']
                     }
                 )
@@ -355,13 +355,13 @@ browser and pasting the output.  When that file changes, this one should be rege
             <span class="field-label-text">
                 "Post type:"
             </span><fieldset class="field-input">
-                <input type="radio" name="${"<%= form_id %>"}-post-type" class="post-type-input" id="${"<%= form_id %>"}-post-type-question" value="question" checked>
-                <label for="${"<%= form_id %>"}-post-type-question" class="post-type-label">
+                <input type="radio" name="<%= form_id %>-post-type" class="post-type-input" id="<%= form_id %>-post-type-question" value="question" checked>
+                <label for="<%= form_id %>-post-type-question" class="post-type-label">
                     <i class="icon icon-question"></i>
                     "Question"
                 </label>
-                <input type="radio" name="${"<%= form_id %>"}-post-type" class="post-type-input" id="${"<%= form_id %>"}-post-type-discussion" value="discussion">
-                <label for="${"<%= form_id %>"}-post-type-discussion" class="post-type-label">
+                <input type="radio" name="<%= form_id %>-post-type" class="post-type-input" id="<%= form_id %>-post-type-discussion" value="discussion">
+                <label for="<%= form_id %>-post-type-discussion" class="post-type-label">
                     <i class="icon icon-comments"></i>
                     "Discussion"
                 </label>

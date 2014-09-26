@@ -66,7 +66,8 @@ if Backbone?
 
       createPost: (event) ->
           event.preventDefault()
-          threadType = @threadTypeView.val()
+          if @isTabMode()
+            threadType = @threadTypeView.val()
           title   = @$(".js-post-title").val()
           body    = @$(".js-post-body").find(".wmd-input").val()
           group   = @$(".js-group-select option:selected").attr("value")

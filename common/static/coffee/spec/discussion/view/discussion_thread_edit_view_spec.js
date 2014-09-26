@@ -26,7 +26,7 @@
                     model: this.thread,
                     mode: 'tab',
                     topicId: 'dummy_id',
-                    threadType: "question",
+                    threadType: 'question',
                     course_settings: this.course_settings
                 }, options);
                 this.view = new DiscussionThreadEditView(options);
@@ -38,7 +38,7 @@
             var view;
             spyOn($, 'ajax').andCallFake(function(params) {
                 expect(params.url.path()).toEqual(DiscussionUtil.urlFor('update_thread', 'dummy_id'));
-                expect(params.data.thread_type).toBe('question');
+                expect(params.data.thread_type).toBe('discussion');
                 expect(params.data.commentable_id).toBe('topic');
                 expect(params.data.title).toBe('new_title');
                 params.success();

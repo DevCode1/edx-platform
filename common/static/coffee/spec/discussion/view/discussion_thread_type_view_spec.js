@@ -18,10 +18,11 @@
             var questionLabel, questionButton, discussionLabel, discussionButton;
 
             this.createThreadTypeView();
+
             questionLabel = this.view.$el.find("label[for$='post-type-question']");
-            questionButton = this.view.$el.find("input[class$='post-type-question']");
+            questionButton = this.view.$el.find("input[id$='post-type-question']");
             discussionLabel = this.view.$el.find("label[for$='post-type-discussion']");
-            discussionButton = this.view.$el.find("input[class$='post-type-discussion']");
+            discussionButton = this.view.$el.find("input[id$='post-type-discussion']");
 
             // Set new thread type to discussion
             discussionLabel.click();
