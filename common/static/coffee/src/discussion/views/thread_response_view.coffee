@@ -13,7 +13,6 @@ if Backbone?
     initialize: (options) ->
       @collapseComments = options.collapseComments
       @createShowView()
-      @listenTo(@model.get('thread'), 'change:thread_type', @render)
 
     renderTemplate: ->
       @template = _.template($("#thread-response-template").html())

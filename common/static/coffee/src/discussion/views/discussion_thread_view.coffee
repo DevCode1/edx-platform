@@ -275,7 +275,12 @@ if Backbone?
         topicId: @model.get('commentable_id')
         threadType: @model.get('thread_type')
       )
-      @editView.bind "thread:updated thread:cancel_edit", @closeEditView
+      @editView.bind "thread:cancel_edit", @closeEditView
+      @editView.bind "thread:updated", () =>
+        @$el.empty()
+        @undelegateEvents()
+        @initialize.call @, @options
+        @render.call @
 
     renderSubView: (view) ->
       view.setElement(@$('.thread-content-wrapper'))
