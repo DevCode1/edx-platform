@@ -17,13 +17,44 @@
 <form id="name-change-form">
     <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}">
 
-    <label for="new-name">${_('Full Name')}</label>
+    <label for="new-name">${_("Full Name")}</label>
     <input id="new-name" type="text" name="new-name" value="" placeholder="Xsy" />
 
     <div class="submit-button">
-        <input type="submit" id="name-change-submit" value="${_('Change My Name')}">
+        <input type="submit" id="name-change-submit" value="${_("Change My Name")}">
     </div>
 </form>
+
+<div id="language-change-body">
+    <form id="language-change-form" action="/i18n/setlang/" method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value="${csrf_token}">
+
+        <label for="new-language">${_("Please choose your preferred language")}</label>
+        <select id="new-language" name="language">
+            % for abbreviation in released_languages:
+                % for language in settings.LANGUAGES:
+                    % if abbreviation == language[0]:
+                        % if abbreviation == language_code:
+                            <option value="${language[0]}" selected="selected">${language[1]}</option>
+                        % else:
+                            <option value="${language[0]}">${language[1]}</option>
+                        % endif
+                    % endif
+                % endfor
+            % endfor
+        </select>
+
+        <div class="submit-button">
+            <input type="submit" id="language-change-submit" value="${_("Change Preferred Language")}" />
+        </div>
+    </form>
+
+    <ul class="list list-actions actions-supplemental">
+        <li class="list-actions-item">
+            ${_("Don't see your preferred language? {link_start}Volunteer to become a translator!{link_end}").format(link_start='<a class=" action action-volunteer" rel="external" target="_blank" href="https://github.com/edx/edx-platform/blob/master/docs/en_us/developers/source/i18n_translators_guide.rst">', link_end="</a>")}
+        </li>
+    </ul>
+</div>
 
 <li class="controls--account">
     <span class="title">

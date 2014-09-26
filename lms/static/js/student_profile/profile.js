@@ -19,19 +19,40 @@ var edx = edx || {};
                 },
 
                 submit: function() {
-                    $("#name-change-form").submit( _fn.form.submit );
+                    $('#name-change-form').submit( _fn.update.name );
+                    $('#language-change-form').submit( _fn.update.language );
+                }
+            },
+
+            update: {
+                name: function( event ) {
+                    _fn.form.submit( event, '#new-name', 'new_name', 'name_change' );
+                },
+
+                language: function( event ) {
+                    _fn.form.submitLanguage( event, '#new-language', 'new_language', 'language_change' );
                 }
             },
 
             form: {
-                submit: function( event ) {
-                    var $newName = $('#new-name');
-                    var data = {
-                        new_name: $newName.val()
-                    };
+                submit: function( event, idSelector, key, url ) {
+                    var $selection = $(idSelector),
+                        data = {};
+
+                    data[key] = $selection.val();
 
                     event.preventDefault();
-                    _fn.ajax.put( 'name_change', data );
+                    _fn.ajax.put( url, data );
+                },
+
+                submitLanguage: function( event, idSelector, key, url ) {
+                    var $selection = $(idSelector),
+                        data = {};
+
+                    data[key] = $selection.val();
+
+                    event.preventDefault();
+                    _fn.ajax.putLanguage( url, data );
                 }
             },
 
@@ -40,7 +61,7 @@ var edx = edx || {};
                     var csrftoken = _fn.cookie.get( 'csrftoken' );
 
                     $.ajaxSetup({
-                        beforeSend: function(xhr, settings) {
+                        beforeSend: function( xhr, settings ) {
                             if ( settings.type === 'PUT' ) {
                                 xhr.setRequestHeader( 'X-CSRFToken', csrftoken );
                             }
@@ -53,6 +74,17 @@ var edx = edx || {};
                         url: url,
                         type: 'PUT',
                         data: data
+                    });
+                },
+
+                putLanguage: function( url, data ) {
+                    $.ajax({
+                        url: url,
+                        type: 'PUT',
+                        data: data,
+                        success: function() {
+                            $('#language-change-form').unbind('submit').submit();
+                        }
                     });
                 }
             },

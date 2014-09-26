@@ -687,7 +687,7 @@ LANGUAGE_CODE = 'en'  # http://www.i18nguy.com/unicode/language-identifiers.html
 # Sourced from http://www.localeplanet.com/icu/ and wikipedia
 LANGUAGES = (
     ('en', u'English'),
-    ('eo', u'Dummy Language (Esperanto)'),  # Dummy languaged used for testing
+    ('eo', u'Dummy Language (Esperanto)'),  # Dummy language used for testing
     ('fake2', u'Fake translations'),        # Another dummy language for testing (not pushed to prod)
 
     ('am', u'አማርኛ'),  # Amharic
