@@ -1,16 +1,22 @@
 """
 Tests for video outline API
 """
-from django.core.urlresolvers import reverse
-from django.test.utils import override_settings
-from rest_framework.test import APITestCase
 from xmodule.modulestore.tests.factories import CourseFactory, ItemFactory
+from xmodule.video_module import transcripts_utils
 from courseware.tests.factories import UserFactory
 from courseware.tests.tests import TEST_DATA_MONGO_MODULESTORE
+from django.core.urlresolvers import reverse
+from django.test.utils import override_settings
+from django.conf import settings
+from rest_framework.test import APITestCase
 from edxval import api
+from uuid import uuid4
+import copy
 
+TEST_DATA_CONTENTSTORE = copy.deepcopy(settings.CONTENTSTORE)
+TEST_DATA_CONTENTSTORE['DOC_STORE_CONFIG']['db'] = 'test_xcontent_%s' % uuid4().hex
 
-@override_settings(MODULESTORE=TEST_DATA_MONGO_MODULESTORE)
+@override_settings(MODULESTORE=TEST_DATA_MONGO_MODULESTORE, CONTENTSTORE=TEST_DATA_CONTENTSTORE)
 class TestVideoOutline(APITestCase):
     def setUp(self):
         self.user = UserFactory.create()
@@ -77,12 +83,28 @@ class TestVideoOutline(APITestCase):
                 }
             ]})
 
+        subid = uuid4().hex
         self.video = ItemFactory.create(
             parent_location=self.unit.location,
             category="video",
             edx_video_id=self.edx_video_id,
             display_name=u"test video omega \u03a9",
+            sub=subid
         )
+
+        result_location = transcripts_utils.save_subs_to_store({
+            'start': [100, 200, 240, 390, 1000],
+            'end': [200, 240, 380, 1000, 1500],
+            'text': [
+                'subs #1',
+                'subs #2',
+                'subs #3',
+                'subs #4',
+                'subs #5'
+            ]},
+            subid,
+            self.course)
+
         self.client.login(username=self.user.username, password='test')
 
     def test_course_not_available(self):
@@ -125,6 +147,7 @@ class TestVideoOutline(APITestCase):
         self.assertTrue(u'test_video_omega_\u03a9' in vid['summary']['id'])
         self.assertEqual(vid['summary']['video_url'], self.video_url)
         self.assertEqual(vid['summary']['size'], 12345)
+        self.assertTrue('en' in vid['summary']['transcripts'])
         self.assertEqual(course_outline[1]['summary']['video_url'], self.html5_video_url)
         self.assertEqual(course_outline[1]['summary']['size'], 0)
 
@@ -141,8 +164,7 @@ class TestVideoOutline(APITestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
-        # TODO: figure out how to add a transcript to test db
-        # kwargs['lang'] = 'en'
-        # url = reverse('video-transcripts-detail', kwargs=kwargs)
-        # response = self.client.get(url)
-        # self.assertEqual(response.status_code, 200)
+        kwargs['lang'] = 'en'
+        url = reverse('video-transcripts-detail', kwargs=kwargs)
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
