@@ -10,6 +10,7 @@ A course sequential file:
 * Organizes units within the sequential.
   
 See:
+
 * `Create Course Sequential Files`_
 * `Sequential File Elements`_
 * `sequential Element Attributes`_
@@ -45,6 +46,14 @@ Sequential File Elements
 The root element of the sequential file is ``sequential``. 
 
 The ``sequential`` element contains one or more child ``vertical`` elements.
+
+.. note:: 
+  For edXML courses that you import to or export from edX Studio, the
+  sequential files contain ``vertical`` elements that reference other files, as
+  shown :ref:`below<Example Sequential File>`. However, in courses for which
+  you never use Studio, the vertical content can be included in the sequential
+  file. In this case, the content of the :ref:`vertical files<Course Vertical
+  XML Files>` would be enclosed in the ``sequential`` element.
 
 ======================
 ``vertical`` Element
@@ -94,6 +103,7 @@ The ``vertical`` element contains one attribute:
    * - ``xqa_key``
      - TBP
 
+.. _Example Sequential File:
 
 *************************************
 Example Sequential File

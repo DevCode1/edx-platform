@@ -1,8 +1,8 @@
-.. _edXML Directory Structure:
+.. _edXML Directory Structure with edX Studio:
 
-##########################
-edXML Directory Structure
-##########################
+###############################################
+edXML Directory Structure with edX Studio
+###############################################
 
 See:
 

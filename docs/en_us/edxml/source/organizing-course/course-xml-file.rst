@@ -4,7 +4,8 @@
 The ``course.xml`` File
 ##########################
 
-You begin developing a course with a ``course.xml`` file, which you place in the top level directory.
+You begin developing a course with a ``course.xml`` file, which you place in
+the top level directory.
 
 See:
 
@@ -25,6 +26,14 @@ For example, the ``course.xml`` file for the edX Demo course contains:
 .. code-block:: xml
   
   <course url_name="Demo_Course" org="edX" course="DemoX"/>
+
+.. note:: 
+  For edXML courses that you import to or export from edX Studio, the
+  ``course.xml`` file contains only the line above. However, in courses for
+  which you never use Studio, the rest of the courseware can be included in the
+  ``course.xml`` file. In this case, the content of the :ref:`course chapter
+  files<Course Chapter XML Files>` would be enclosed in the ``course`` element
+  in the ``course.xml`` file.
 
 
 *************************************

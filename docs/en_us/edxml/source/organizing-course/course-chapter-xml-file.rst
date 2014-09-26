@@ -10,6 +10,7 @@ A course chapter file:
 * Organizes subsections within the chapter.
   
 See:
+
 * `Create Course Chapter Files`_
 * `Chapter File Elements`_
 * `chapter Element Attributes`_
@@ -43,7 +44,15 @@ Chapter File Elements
 
 The root element of the chapter file is ``chapter``. 
 
-The ``chapter`` element contains one or more child ``sequential`` elements.
+The ``chapter`` element contains one or more child ``sequential`` elements. 
+
+.. note:: 
+  For edXML courses that you import to or export from edX Studio, the chapter
+  files contain ``sequential`` elements that reference other files, as shown
+  :ref:`below<Example Chapter File>`. However, in courses for which you never use Studio, the sequential
+  content can be included in the chapter file. In this case, the content of the
+  :ref:`sequential files<Course Sequential XML Files>` would be enclosed in the
+  ``chapter`` element.
 
 ======================
 ``sequential`` Element
@@ -81,6 +90,8 @@ The ``sequential`` element contains one attribute:
    * - ``start``
      - The date and time, in UTC, that the chapter is released to students.
        Before this date and time, students do not see the chapter.
+
+.. _Example Chapter File:
 
 *************************************
 Example Chapter File

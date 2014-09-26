@@ -10,6 +10,7 @@ A course vertical file:
 * Organizes components and other verticals in the vertical.
 
 See:
+
 * `Create Course Vertical Files`_
 * `Vertical File Elements`_
 * `vertical Element Attributes`_
@@ -47,9 +48,16 @@ The root element of the vertical file is ``vertical``.
 The ``vertical`` element contains one or more child elements for each component
 in the vertical.
 
+A vertical element can also contain a vertical element. You can nest
+verticals, or units, recursively.
+
 .. note:: 
- A vertical element can also contain a vertical element. You can nest
- verticals, or units, recursively.
+  For edXML courses that you import to or export from edX Studio, the vertical
+  files contain elements that reference other files for course components, as
+  shown :ref:`below<Example Vertical File>`. However, in courses for which you
+  never use Studio, the component content can be included in the vertical file.
+  In this case, the content of the component files would be enclosed in the
+  ``vertical`` element.
 
 ==============================
 ``vertical`` Element Children
@@ -76,8 +84,8 @@ table with type/xml element/link
      - The value that is displayed to students as the name of the sequential,
        or subsection.
    
-release status??
 
+.. _Example Vertical File:
 
 *************************************
 Example Vertical File

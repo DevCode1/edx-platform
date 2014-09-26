@@ -1,10 +1,10 @@
-.. _Organizing Your Course Content:
+.. _Working with edXML and edX Studio:
 
-##############################
-Organizing Your Course Content
-##############################
+##################################
+Working with edXML and edX Studio
+##################################
 
-Use the chapters in this section to organize your course content.
+Use the chapters in this section to organize your content when you are working with both edXML and edX Studio for the same course.
 
 .. toctree::
    :maxdepth: 2
