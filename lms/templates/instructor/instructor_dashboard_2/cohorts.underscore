@@ -4,8 +4,8 @@
 </h2>
 
 <!-- nav -->
-<% if (cohorts.length > 0) { %>
-    <div class="cohort-management-nav">
+<div class="cohort-management-nav">
+    <% if (cohorts.length > 0) { %>
         <form action="" method="post" name="" id="cohort-management-nav-form" class="cohort-management-nav-form">
             <div class="cohort-management-nav-form-select field field-select">
                 <label for="cohort-select" class="label sr">${_("Select a cohort to manage")}</label>
@@ -13,10 +13,19 @@
                 </select>
             </div>
 
-            <button class="form-submit button action-primary action-view sr"><%- gettext('View cohort group') %></button>
+            <div class="form-actions">
+                <button class="form-submit button action-primary action-view sr"><%- gettext('View Cohort Group') %></button>
+            </div>
         </form>
-    </div>
+    <% } %>
 
-    <!-- individual group -->
-    <div class="cohort-management-group"></div>
-<% } %>
+    <a href="" class="action-primary action-create">
+        <i class="icon-plus"></i>
+        <%- gettext('Add Cohort Group') %>
+    </a>
+</div>
+
+<div class="message message-warning"></div>
+
+<!-- individual group -->
+<div class="cohort-management-group"></div>

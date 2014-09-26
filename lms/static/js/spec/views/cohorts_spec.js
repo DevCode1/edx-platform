@@ -3,7 +3,8 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
     function (Backbone, $, AjaxHelpers, TemplateHelpers, CohortsView, CohortCollection) {
         describe("Cohorts View", function () {
             var catLoversInitialCount = 123, dogLoversInitialCount = 456, unknownUserMessage,
-                createMockCohorts, createCohortsView, cohortsView, requests, verifyMessage, verifyHeader;
+                createMockCohorts, createCohortsView, cohortsView, requests,
+                verifyMessage, verifyDetailedMessage, verifyHeader;
 
             createMockCohorts = function (catCount, dogCount) {
                 return {
@@ -22,8 +23,8 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
                 };
             };
 
-            createCohortsView = function (test, initialCohortID) {
-                var cohorts = new CohortCollection(createMockCohorts(), {parse: true});
+            createCohortsView = function (test, initialCohortID, initialCohorts) {
+                var cohorts = new CohortCollection(initialCohorts || createMockCohorts(), {parse: true});
                 cohorts.url = '/mock_service';
                 requests = AjaxHelpers.requests(test);
                 cohortsView = new CohortsView({
@@ -35,26 +36,30 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
                 }
             };
 
-            verifyMessage = function(expectedTitle, messageType, expectedDetails, expectedAction) {
-                var numDetails = cohortsView.$('.summary-items').children().length;
-
+            verifyMessage = function(expectedTitle, expectedMessageType, expectedMessage, expectedAction, hasDetails) {
                 expect(cohortsView.$('.message-title').text().trim()).toBe(expectedTitle);
-                expect(cohortsView.$('div.message').hasClass('message-' + messageType)).toBe(true);
+                expect(cohortsView.$('div.message')).toHaveClass('message-' + expectedMessageType);
+                if (expectedMessage) {
+                    expect(cohortsView.$('.message-copy p').text()).toBe(expectedMessage);
+                }
                 if (expectedAction) {
-                    expect(cohortsView.$('.message-actions .action-primary').text()).toBe(expectedAction);
+                    expect(cohortsView.$('.message-actions .action-primary').text().trim()).toBe(expectedAction);
                 }
                 else {
-                    expect(cohortsView.$('.message-actions .action-primary').length).toBe(0);
+                    expect(cohortsView.$('.message-actions .action-primary')).not.toExist();
                 }
-                if (expectedDetails) {
-                    expect(numDetails).toBe(expectedDetails.length);
-                    cohortsView.$('.summary-item').each(function (index) {
-                       expect($(this).text().trim()).toBe(expectedDetails[index]);
-                    });
+                if (!hasDetails) {
+                    expect(cohortsView.$('.summary-items')).not.toExist();
                 }
-                else {
-                    expect(numDetails).toBe(0);
-                }
+            };
+
+            verifyDetailedMessage = function(expectedTitle, expectedMessageType, expectedDetails, expectedAction) {
+                var numDetails = cohortsView.$('.summary-items').children().length;
+                verifyMessage(expectedTitle, expectedMessageType, null, expectedAction, true);
+                expect(numDetails).toBe(expectedDetails.length);
+                cohortsView.$('.summary-item').each(function (index) {
+                   expect($(this).text().trim()).toBe(expectedDetails[index]);
+                });
             };
 
             verifyHeader = function(expectedCohortId, expectedTitle, expectedCount) {
@@ -86,6 +91,15 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
                 TemplateHelpers.installTemplate('templates/instructor/instructor_dashboard_2/cohort-selector');
                 TemplateHelpers.installTemplate('templates/instructor/instructor_dashboard_2/cohort-editor');
                 TemplateHelpers.installTemplate('templates/instructor/instructor_dashboard_2/notification');
+            });
+
+            it("Show an error if no cohorts are defined", function() {
+                createCohortsView(this, null, { cohorts: [] });
+                verifyMessage(
+                    'You currently have no cohort groups configured',
+                    'warning',
+                    'Please complete your cohort group configuration by creating groups within Studio.'
+                );
             });
 
             describe("Cohort Selector", function () {
@@ -157,7 +171,7 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
                     respondToAdd({ unknown: ['unknown@sample.com'] });
                     respondToRefresh(catLoversInitialCount, dogLoversInitialCount);
                     verifyHeader(1, 'Cat Lovers', catLoversInitialCount);
-                    verifyMessage('There was an error when trying to add students:', 'error',
+                    verifyDetailedMessage('There was an error when trying to add students:', 'error',
                         [unknownUserMessage('unknown@sample.com')]
                     );
                     expect(getStudentInput().val()).toBe('unknown@sample.com');
@@ -180,7 +194,7 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
                         'unknown6@sample.com']
                     });
                     respondToRefresh(catLoversInitialCount + 6, dogLoversInitialCount);
-                    verifyMessage('There were 6 errors when trying to add students:', 'error',
+                    verifyDetailedMessage('There were 6 errors when trying to add students:', 'error',
                         [
                             unknownUserMessage('unknown1@sample.com'), unknownUserMessage('unknown2@sample.com'),
                             unknownUserMessage('unknown3@sample.com'), unknownUserMessage('unknown4@sample.com'),
@@ -190,8 +204,8 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
                     );
                     expect(getStudentInput().val()).toBe(sixUsers);
                     // Click "View all"
-                    cohortsView.$('a.action-primary').click();
-                    verifyMessage('There were 6 errors when trying to add students:', 'error',
+                    cohortsView.$('.action-expand').click();
+                    verifyDetailedMessage('There were 6 errors when trying to add students:', 'error',
                         [
                             unknownUserMessage('unknown1@sample.com'), unknownUserMessage('unknown2@sample.com'),
                             unknownUserMessage('unknown3@sample.com'), unknownUserMessage('unknown4@sample.com'),
@@ -218,7 +232,7 @@ define(['backbone', 'jquery', 'js/common_helpers/ajax_helpers', 'js/common_helpe
                     });
                     respondToRefresh();
 
-                    verifyMessage('3 students have been added to this cohort group', 'confirmation',
+                    verifyDetailedMessage('3 students have been added to this cohort group', 'confirmation',
                         [
                             "2 students were removed from group 2",
                             "1 student was removed from group 3",

@@ -18,8 +18,11 @@
             this.$el.html(this.template({
                 type: this.model.get("type"),
                 title: this.model.get("title"),
+                message: this.model.get("message"),
                 details: this.model.get("details"),
-                actionText: actionText
+                actionText: actionText,
+                actionClass: this.model.get("actionClass"),
+                actionIconClass: this.model.get("actionIconClass")
             }));
             return this;
         },

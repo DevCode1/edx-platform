@@ -1,4 +1,4 @@
-(function(Backbone, CohortEditorView) {
+(function(Backbone, CohortEditorView, NotificationModel, NotificationView) {
     var CohortsView = Backbone.View.extend({
         events : {
             "change .cohort-select": "showCohortEditor"
@@ -16,6 +16,12 @@
                 cohorts: this.model.models
             }));
             this.renderSelector();
+            if (this.model.length == 0) {
+                this.showWarningMessage(
+                    gettext('You currently have no cohort groups configured'),
+                    gettext('Please complete your cohort group configuration by creating groups within Studio.')
+                );
+            }
             return this;
         },
 
@@ -49,8 +55,25 @@
                 });
                 this.editor.render();
             }
+        },
+
+        showWarningMessage: function(title, message) {
+            var model = new NotificationModel();
+            model.set('type', 'warning');
+            model.set('title', title);
+            model.set('message', message);
+
+            if (this.warningNotification) {
+                this.warningNotification.remove();
+            }
+
+            this.warningNotification = new NotificationView({
+                model: model
+            });
+            this.warningNotification.render();
+            this.$('.cohort-management-nav').after(this.warningNotification.$el);
         }
     });
 
     this.CohortsView = CohortsView;
-}).call(this, Backbone, CohortEditorView);
+}).call(this, Backbone, CohortEditorView, NotificationModel, NotificationView);

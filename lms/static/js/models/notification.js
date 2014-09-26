@@ -4,8 +4,11 @@
             // Supported types are "confirmation" and "error".
             type: "confirmation",
             title: "",
+            message: "",
             details: [],
             actionText: "",
+            actionClass: "",
+            actionIconClass: "",
             actionCallback: null
         }
     });

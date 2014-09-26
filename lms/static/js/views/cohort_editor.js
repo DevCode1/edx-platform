@@ -189,7 +189,8 @@
                 errorModel = new NotificationModel({
                     details: details,
                     actionText: gettext("View all errors"),
-                    actionCallback: numErrors > 5 ? errorActionCallback : null
+                    actionCallback: numErrors > 5 ? errorActionCallback : null,
+                    actionClass: 'action-expand'
                 });
 
                 this.showErrorMessage(title, false, errorModel);
