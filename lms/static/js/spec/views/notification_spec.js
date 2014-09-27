@@ -82,7 +82,7 @@ define(['backbone', 'jquery', 'js/models/notification', 'js/views/notification',
             it ('triggers the callback when the action button is clicked', function () {
                 var actionCallback = jasmine.createSpy('Spy on callback');
                 var view = createNotification({actionText: 'action text', actionCallback: actionCallback});
-                notificationView.$('a.action-primary').click();
+                notificationView.$('button.action-primary').click();
                 expect(actionCallback).toHaveBeenCalledWith(view);
             });
         });
