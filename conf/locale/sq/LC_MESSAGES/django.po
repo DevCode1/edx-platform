@@ -140,7 +140,7 @@ msgstr ""
 
 #: common/djangoapps/course_modes/models.py
 msgid "You're enrolled as a verified student"
-msgstr ""
+msgstr "Ju jeni regjistruar, si nje student i verifikuar"
 
 #: common/djangoapps/course_modes/models.py
 #: lms/templates/instructor/instructor_dashboard_2/course_info.html
@@ -168,7 +168,7 @@ msgstr ""
 
 #: common/djangoapps/course_modes/models.py
 msgid "Auditing"
-msgstr ""
+msgstr "Auditim"
 
 #: common/djangoapps/course_modes/models.py
 msgid "You're enrolled as a professional education student"
@@ -180,7 +180,7 @@ msgstr ""
 
 #: common/djangoapps/course_modes/views.py
 msgid "Enrollment is closed"
-msgstr ""
+msgstr "Regjistrimi është mbyllur"
 
 #: common/djangoapps/course_modes/views.py
 msgid "Enrollment mode not supported"
@@ -220,7 +220,7 @@ msgstr ""
 
 #: common/djangoapps/embargo/models.py
 msgid "The message to show when a user is blocked from enrollment."
-msgstr ""
+msgstr "Mesazhi që do të i shfaqet përdoruesit, kur ai nuk mund te regjistrohet."
 
 #: common/djangoapps/embargo/models.py
 msgid "The message to show when a user is blocked from accessing a course."
@@ -256,7 +256,7 @@ msgstr ""
 
 #: common/djangoapps/student/forms.py
 msgid "Username must be minimum of two characters long"
-msgstr ""
+msgstr "Emri i përdoruesit duhet të jetë minimumi 2 karaktere"
 
 #: common/djangoapps/student/forms.py
 msgid "A properly formatted e-mail is required"
@@ -288,11 +288,11 @@ msgstr "Ju duhet të i pranoni rregullat e përdorimit."
 
 #: common/djangoapps/student/forms.py
 msgid "A level of education is required"
-msgstr ""
+msgstr "Niveli i edukimit është i detyrueshëm"
 
 #: common/djangoapps/student/forms.py
 msgid "Your gender is required"
-msgstr ""
+msgstr "Gjinia juaj është e detyrueshme"
 
 #: common/djangoapps/student/forms.py
 msgid "Your year of birth is required"
@@ -308,7 +308,7 @@ msgstr "Përshkrimi i synimeve tuaja është i obligueshëm"
 
 #: common/djangoapps/student/forms.py
 msgid "A city is required"
-msgstr ""
+msgstr "Qyteti është i detyrueshëm"
 
 #: common/djangoapps/student/forms.py
 msgid "A country is required"
@@ -320,7 +320,7 @@ msgstr ""
 
 #: common/djangoapps/student/forms.py
 msgid "You are missing one or more required fields"
-msgstr ""
+msgstr "Juve është duke ju munguar një ose më shumë nga hapësirat e detyrueshme"
 
 #: common/djangoapps/student/forms.py
 msgid "Username and password fields cannot match"
@@ -380,7 +380,7 @@ msgstr ""
 
 #: common/djangoapps/student/models.py
 msgid "Elementary/primary school"
-msgstr ""
+msgstr "Elementare/shkolla fillore"
 
 #. #-#-#-#-#  django-partial.po (edx-platform)  #-#-#-#-#
 #. Translators: 'None' refers to the student's level of education
